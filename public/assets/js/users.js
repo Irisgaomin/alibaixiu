@@ -1,3 +1,4 @@
+// 新增用户
 $('#userForm').on('submit', function() {
   // 获取用户在表单中输入的内容并将内容格式化成参数字符串
   var formData = $(this).serialize()
@@ -18,6 +19,7 @@ $('#userForm').on('submit', function() {
   // 阻止表单的默认提交行为
   return false
 })
+// 新增用户头像
 $('#avatar').on('change',function(){
   var formData = new FormData() 
   formData.append('avatar',this.files[0])
