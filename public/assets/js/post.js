@@ -1,45 +1,68 @@
-// 显示所属分类数据
-$.ajax({
-  type:'get',//get或post
-  url:'/categories',//请求的地址
-  success:function(result){//成功的回调函数
-    let html = template('postTpl',{data:result})
-    $('#category').html(html)
-  }
-})
+// 显示文章列表
+var page = 1
+render()
 
-// 实现图片上传和预览
-$('#feature').on('change',function () {
-  let formData = new FormData()
-  formData.append('avatar',this.files[0])
+// 处理日期时间格式
+function dateformat (data) {
+  date = new Date(data)
+  return date.getFullYear() + '-' + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1))  + '-' + (date.getDate() < 10 ? '0' + date.getDate() :date.getDate())
+}
+
+// 分页功能实现
+function changePage(currentPage) {
+  page = currentPage
+  render()
+}
+// 渲染页面
+function render() {
   $.ajax({
-    type:'post',
-    url:'/upload',
-    data:formData,
-    contentType:false,
-    processData:false,
+    type:'get',
+    url:'/posts',
+    data:{page},
     success:function(result){
-      $('.thumbnail').attr('src',result[0].avatar).show()
-      $('#thumbnail').val(result[0].avatar)
+      let html = template('postsTpl',{data:result})
+      $('#postsBox').html(html)
+      let pageHtml = template('pageTpl',result)
+      $('#page').html(pageHtml)
     }
   })
-})
+}
 
-// 文章上传
-$('#addPost').on('submit',function(){
+// 渲染筛选的分类的数据
+$.ajax({
+  type:'get',
+  url:'/categories',         
+  success:function(result){
+    let html = template('categoryTpl',{data: result})
+    $('#categoryBox').html(html)
+  }
+})
+// 实现文章的筛选功能
+$('#filterForm').on('submit',function () {
   let formData = $(this).serialize()
-  console.log(formData)
   $.ajax({
-    type:'post',
+    type:'get',
     url:'/posts',
     data:formData,
     success:function(result){
-      console.log(result)
-      // location.href = "posts.html"
-    },
-    error:function(err){
-      console.log(err)
+      let html = template('postsTpl',{data:result})
+      $('#postsBox').html(html)
+      let pageHtml = template('pageTpl',result)
+      $('#page').html(pageHtml)
     }
   })
   return false
+})
+// 删除功能
+$('#postsBox').on('click','#delete',function(){
+  let id = $(this).attr('data-id')
+  if(confirm('确认是否删除该用户')){
+    $.ajax({
+      type:'delete',
+      url:'/posts/' + id,
+      success:function(result){
+        location.reload()
+      }
+    })
+  }
 })
