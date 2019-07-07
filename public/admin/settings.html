@@ -1,3 +1,9 @@
+<script src="/login/status"></script>
+<script>
+  if(!isLogin) {
+    location.href = './login.html'
+  }
+</script>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -17,7 +23,7 @@
         <li><a href="login.html"><i class="fa fa-sign-out"></i>退出</a></li>
       </ul>
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid" id="setBox">
       <div class="page-title">
         <h1>网站设置</h1>
       </div>
@@ -25,13 +31,14 @@
       <!-- <div class="alert alert-danger">
         <strong>错误！</strong>发生XXX错误
       </div> -->
-      <form class="form-horizontal">
+      <form class="form-horizontal" id="setForm">
         <div class="form-group">
           <label for="site_logo" class="col-sm-2 control-label">网站图标</label>
           <div class="col-sm-6">
             <label class="form-image">
-              <input type="file">
-              <img src="../assets/img/logo.png">
+              <input type="file" id="myFile">
+              <img src="../assets/img/logo.png" id="preview">
+              <input type="hidden" name="logo" id="hiddenImg">
               <i class="mask fa fa-upload"></i>
             </label>
           </div>
@@ -39,17 +46,17 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">站点名称</label>
           <div class="col-sm-6">
-            <input class="form-control" type="text" placeholder="站点名称">
+            <input name="title" class="form-control" type="text" placeholder="站点名称">
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">评论</label>
           <div class="col-sm-6">
             <div class="checkbox">
-              <label><input type="checkbox" checked>开启评论功能</label>
+              <label><input name="comment" id="comment" type="checkbox" checked>开启评论功能</label>
             </div>
             <div class="checkbox">
-              <label><input type="checkbox" checked>评论必须经人工批准</label>
+              <label><input name="review" id="review" type="checkbox" checked>评论必须经人工批准</label>
             </div>
           </div>
         </div>
@@ -64,7 +71,7 @@
 
   <div class="aside">
     <div class="profile">
-      <img class="avatar" src="../uploads/avatar.jpg">
+      <img class="avatar" src="../uploads/avatar.jpg" style="display: none">
       <h3 class="name">Coder</h3>
     </div>
     <ul class="nav">
@@ -101,5 +108,7 @@
 
   <script src="../assets/vendors/jquery/jquery.js"></script>
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/settings.js"></script>
 </body>
 </html>

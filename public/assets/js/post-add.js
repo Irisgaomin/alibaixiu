@@ -60,6 +60,7 @@ function getUrlParams(name) {
       return temp[1]
     }
   }
+  return -1
 }
 
 // 获取id值，如果id存在，则是添加文章，否则是修改文章

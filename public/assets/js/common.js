@@ -14,3 +14,12 @@ $('#logout').on('click', () => {
     })
   }
 })
+$.ajax({
+  type:'get',//get或post
+  url:'/users/' + userId,//请求的地址
+  success:function(result){//成功的回调函数
+    $('.profile .avatar').show()
+    $('.profile .avatar').attr('src',result.avatar)
+    $('.profile .name').html(result.nickName)
+  }
+})

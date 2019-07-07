@@ -1,8 +1,8 @@
 // 轮播图列表展示
 $.ajax({
-  type:'get',//get或post
-  url:'/slides',//请求的地址
-  success:function(result){//成功的回调函数
+  type:'get',
+  url:'/slides',
+  success:function(result){
     let html = template('sliderTpl',{data:result})
     $('#slideBox').html(html)
   }
